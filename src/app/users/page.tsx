@@ -14,7 +14,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [preferences, setPreferences] = useState('none')
+  const [preferences, setPreferences] = useState('')
   const [error, setError] = useState('')
 
   // Fetch users
@@ -63,7 +63,7 @@ export default function UsersPage() {
 
       setName('')
       setEmail('')
-      setPreferences('none')
+      setPreferences('')
       fetchUsers() // refresh list
     } catch (err) {
       console.error(err)

@@ -14,13 +14,28 @@ interface PantryItem {
 export default function PantryPage() {
   const [items, setItems] = useState<PantryItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   async function fetchItems() {
     setLoading(true)
-    const res = await fetch('/api/pantry')
-    const data = await res.json()
-    setItems(data || [])
-    setLoading(false)
+    setError(null)
+
+    try {
+      // Using supabase to fetch data from the pantry_items table
+      const { data, error } = await supabase.from('pantry_items').select('*')
+
+      if (error) {
+        setError('Error fetching items')
+        console.error(error)
+      } else {
+        setItems(data || [])
+      }
+    } catch (error) {
+      setError('An unexpected error occurred')
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -33,6 +48,8 @@ export default function PantryPage() {
 
       {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
       ) : (
         <table className="w-full border-collapse border">
           <thead>
@@ -46,7 +63,7 @@ export default function PantryPage() {
             </tr>
           </thead>
           <tbody>
-            {items.map(i => (
+            {(Array.isArray(items) ? items : []).map((i) => (
               <tr key={i.pantry_id}>
                 <td className="border px-2 py-1">{i.pantry_id}</td>
                 <td className="border px-2 py-1">{i.item_name}</td>
