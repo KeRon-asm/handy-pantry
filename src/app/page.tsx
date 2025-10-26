@@ -14,7 +14,7 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [preferences, setPreferences] = useState('None')
+  const [preferences, setPreferences] = useState('')
 
   async function fetchUsers() {
     setLoading(true)
@@ -33,7 +33,7 @@ export default function UsersPage() {
     })
     setName('')
     setEmail('')
-    setPreferences('None')
+    setPreferences('')
     fetchUsers()
   }
 
@@ -43,37 +43,55 @@ export default function UsersPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Users</h1>
+      <h1 className="text-2xl font-bold mb-4">Household Users</h1>
 
-      <form onSubmit={addUser} className="mb-6 space-y-2">
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          required
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="text"
-          placeholder="Preferences"
-          value={preferences}
-          onChange={e => setPreferences(e.target.value)}
-          className="border p-2 rounded w-full"
-        />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      {/*  FORM SECTION */}
+      <form onSubmit={addUser} className="mb-6 space-y-4">
+        {/*  Added label and reduced width */}
+        <div>
+          <label className="block font-medium mb-1">Name:</label>
+          <input
+            type="text"
+            placeholder="Enter name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+            className="border p-2 rounded w-1/2" // changed from w-full
+          />
+        </div>
+
+        <div>
+          <label className="block font-medium mb-1">Email:</label>
+          <input
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            className="border p-2 rounded w-1/2" // changed from w-full
+          />
+        </div>
+
+        <div>
+          <label className="block font-medium mb-1">Preferences:</label>
+          <input
+            type="text"
+            placeholder="Enter preferences"
+            value={preferences}
+            onChange={e => setPreferences(e.target.value)}
+            className="border p-2 rounded w-1/2" // changed from w-full
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded mt-2"
+        >
           Add User
         </button>
       </form>
 
+      {/*  TABLE SECTION */}
       {loading ? (
         <p>Loading...</p>
       ) : (
