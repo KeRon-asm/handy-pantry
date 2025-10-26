@@ -15,9 +15,14 @@ export async function GET(req: Request) {
     if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 })
 
     return new Response(JSON.stringify({ users: data }), { status: 200 })
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (err instanceof Error) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500 })
   }
+  return new Response(JSON.stringify({ error: 'Unknown error' }), { status: 500 })
+} /*{
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+  }*/
 }
 
 // POST a new user
@@ -29,9 +34,14 @@ export async function POST(req: Request) {
     if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 })
 
     return new Response(JSON.stringify({ user: data }), { status: 201 })
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (err instanceof Error) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500 })
   }
+  return new Response(JSON.stringify({ error: 'Unknown error' }), { status: 500 })
+} /*{
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+  }*/
 }
 
 // PATCH to update user information
@@ -51,7 +61,12 @@ export async function PATCH(req: Request) {
     if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 })
 
     return new Response(JSON.stringify({ user: data }), { status: 200 })
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (err instanceof Error) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500 })
   }
+  return new Response(JSON.stringify({ error: 'Unknown error' }), { status: 500 })
+} /*{
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+  }*/
 }

@@ -23,18 +23,20 @@ export default function UsersPage() {
     try {
       const res = await fetch('/api/users')
       const data = await res.json()
+
       if (data.error) {
         setError(data.error)
         setUsers([])
       } else {
         setUsers(data.users || [])
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err)
       setError('Failed to load users')
       setUsers([])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   // Add new user
@@ -56,16 +58,20 @@ export default function UsersPage() {
         body: JSON.stringify(newUser),
       })
       const data = await res.json()
+
       if (data.error) {
         setError(data.error)
         return
       }
 
+      // clear form
       setName('')
       setEmail('')
       setPreferences('')
-      fetchUsers() // refresh list
-    } catch (err) {
+
+      // refresh list
+      await fetchUsers()
+    } catch (err: unknown) {
       console.error(err)
       setError('Failed to add user')
     }
