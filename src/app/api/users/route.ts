@@ -9,9 +9,13 @@ export async function GET() {
     }
 
     return new Response(JSON.stringify({ users: data || [] }), { status: 200 })
-  } catch (err: any) {
-    console.error('Unexpected GET error:', err.message)
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('Unexpected GET error:', err.message)
+      return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+    }
+    console.error('Unexpected non-Error thrown in GET:', err)
+    return new Response(JSON.stringify({ error: 'Unknown error' }), { status: 500 })
   }
 }
 
@@ -25,9 +29,12 @@ export async function POST(req: Request) {
     }
 
     return new Response(JSON.stringify({ user: data }), { status: 201 })
-  } catch (err: any) {
-    console.error('Unexpected POST error:', err.message)
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error('Unexpected POST error:', err.message)
+      return new Response(JSON.stringify({ error: err.message }), { status: 500 })
+    }
+    console.error('Unexpected non-Error thrown in POST:', err)
+    return new Response(JSON.stringify({ error: 'Unknown error' }), { status: 500 })
   }
-
 }
