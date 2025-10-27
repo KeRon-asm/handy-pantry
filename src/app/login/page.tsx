@@ -30,8 +30,11 @@ async function handleSubmit(e: React.FormEvent) {
     }
 
     router.push(redirectTo);
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (err instanceof Error) {
     setError(err.message);
+  } else {
+    setError('An unexpected error occurred');
   } finally {
     setLoading(false);
   }
