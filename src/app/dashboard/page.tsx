@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase/supabaseClient";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<user | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function DashboardPage() {
         <header className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{`Welcome${user?.email ? `, ${user.email}` : ''}`}</h1>
-            <p className="text-gray-600">Here's your HandyPantry dashboard.</p>
+            <p className="text-gray-600">Here&apos;s your HandyPantry dashboard.</p>
           </div>
 
           <div className="flex items-center gap-3">
