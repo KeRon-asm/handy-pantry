@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabaseClient'
+import { supabase } from '@/lib/supabase/supabaseClient'
 
 // GET all users or a specific user by id
 export async function GET(req: Request) {
